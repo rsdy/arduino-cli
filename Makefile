@@ -45,8 +45,7 @@ F_CPU = 16000000
 ############################################################################
 # Below here nothing should be changed...
 
-ARDUINO = $(INSTALL_DIR)/hardware/cores/arduino
-#ARDUINO = $(INSTALL_DIR)/hardware/arduino/cores/arduino/
+ARDUINO = $(INSTALL_DIR)/hardware/arduino/cores/arduino/
 AVR_TOOLS_PATH = /usr/bin
 AVRDUDE_PATH = $(INSTALL_DIR)/hardware/tools
 SRC =  $(ARDUINO)/pins_arduino.c $(ARDUINO)/wiring.c \
@@ -142,6 +141,8 @@ applet/$(TARGET).cpp: $(TARGET).pde
 	echo '#include "WProgram.h"' > applet/$(TARGET).cpp
 	cat $(TARGET).pde >> applet/$(TARGET).cpp
 	cat $(ARDUINO)/main.cpp >> applet/$(TARGET).cpp
+	echo "extern \"C\" void __cxa_pure_virtual() { while (1); }" \
+		>> applet/$(TARGET).cpp
 
 elf: applet/$(TARGET).elf
 hex: applet/$(TARGET).hex
