@@ -1,0 +1,4 @@
+1) put pulsedtr.py into the arduino installation directory, give it executable rights
+2) set the INSTALL_DIR variable in the Makefile appropriately
+3) copy the Makefile into the directory of your project
+4) make && make upload
