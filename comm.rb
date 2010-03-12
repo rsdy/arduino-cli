@@ -1,18 +1,31 @@
 #!/usr/bin/ruby
 
-File.open(ARGV[0], "r+") do |ser|
-	Thread.new do
-		while 1
-			if line = ser.readpartial(50)
-				print line
-				$stdout.flush
-			end
-		end
-	end
-	
+ser = File.new(ARGV[0], "r+")
+
+stdread = Thread.new do
 	while 1
-		if line = $stdin.readline rescue break
-			ser.print line
+		if buf = $stdin.getc
+			ser.print buf
+			ser.flush
 		end
+		Thread.pass
 	end
 end
+
+serwrite = Thread.new do
+	while 1
+		if line = ser.readpartial(50)
+			print line
+			ser.flush
+			$stdout.flush
+		end
+		Thread.pass
+	end
+end
+
+trap("INT") { stdread.exit }
+
+`stty cbreak`
+stdread.join
+ser.close
+`stty -cbreak`

@@ -51,8 +51,8 @@ AVRDUDE_PATH = $(INSTALL_DIR)/hardware/tools
 SRC =  $(ARDUINO)/pins_arduino.c $(ARDUINO)/wiring.c \
 $(ARDUINO)/wiring_analog.c $(ARDUINO)/wiring_digital.c \
 $(ARDUINO)/wiring_pulse.c \
-$(ARDUINO)/wiring_shift.c $(ARDUINO)/WInterrupts.c $(INSTALL_DIR)/libraries/Wire/utility/twi.c
-CXXSRC =  $(INSTALL_DIR)/libraries/Wire/Wire.cpp $(ARDUINO)/HardwareSerial.cpp $(ARDUINO)/WMath.cpp \
+$(ARDUINO)/wiring_shift.c $(ARDUINO)/WInterrupts.c
+CXXSRC =  $(ARDUINO)/HardwareSerial.cpp $(ARDUINO)/WMath.cpp \
 $(ARDUINO)/Print.cpp
 FORMAT = ihex
 
@@ -72,7 +72,7 @@ CDEFS = -DF_CPU=$(F_CPU)
 CXXDEFS = -DF_CPU=$(F_CPU)
 
 # Place -I options here
-CINCS = -I$(ARDUINO) -I$(INSTALL_DIR)/libraries/Wire/ -I$(INSTALL_DIR)/libraries/Wire/utility
+CINCS = -I$(ARDUINO)
 CXXINCS = -I$(ARDUINO)
 
 # Compiler flag to set the C Standard level.
@@ -141,8 +141,6 @@ applet/$(TARGET).cpp: $(TARGET).pde
 	echo '#include "WProgram.h"' > applet/$(TARGET).cpp
 	cat $(TARGET).pde >> applet/$(TARGET).cpp
 	cat $(ARDUINO)/main.cpp >> applet/$(TARGET).cpp
-	echo "extern \"C\" void __cxa_pure_virtual() { while (1); }" \
-		>> applet/$(TARGET).cpp
 
 elf: applet/$(TARGET).elf
 hex: applet/$(TARGET).hex
