@@ -5,7 +5,7 @@ ser = File.new(ARGV[0], "r+")
 stdread = Thread.new do
 	while 1
 		if buf = $stdin.getc
-			ser.print buf
+			ser.putc buf
 			ser.flush
 		end
 		Thread.pass
@@ -14,9 +14,8 @@ end
 
 serwrite = Thread.new do
 	while 1
-		if line = ser.readpartial(50)
-			print line
-			ser.flush
+		if buf = ser.readpartial(50)
+			print buf
 			$stdout.flush
 		end
 		Thread.pass
