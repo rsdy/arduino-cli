@@ -139,7 +139,7 @@ build: elf hex
 applet/$(TARGET).cpp: $(TARGET).pde
 	test -d applet || mkdir applet
 	echo '#include "WProgram.h"' > applet/$(TARGET).cpp
-	cat $(TARGET).pde >> applet/$(TARGET).cpp
+	cat *.pde >> applet/$(TARGET).cpp
 	cat $(ARDUINO)/main.cpp >> applet/$(TARGET).cpp
 
 elf: applet/$(TARGET).elf
