@@ -1,6 +1,9 @@
 #!/usr/bin/ruby
 
-ser = File.new(ARGV[0], "r+")
+require 'rubygems'
+require 'serialport'
+
+ser = SerialPort.new ARGV[0], ARGV[1].to_i, 8, 1, SerialPort::NONE
 
 stdread = Thread.new do
 	while 1
